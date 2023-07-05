@@ -1,16 +1,25 @@
 import React from 'react'
 
+type Mode = 'light' | 'dark'
+
 type AppState = {
-  mode: string
+  mode: Mode
+}
+
+const getInitialMode = (): Mode => {
+  const storedMode = localStorage.getItem('mode')
+  if (storedMode) {
+    return storedMode as Mode
+  }
+
+  return window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
 const initialState: AppState = {
-  mode: localStorage.getItem('mode')
-    ? localStorage.getItem('mode')!
-    : window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light',
+  mode: getInitialMode(),
 }
 
 type Action = { type: 'TOGGLE_MODE' }
@@ -24,9 +33,16 @@ const reducer = (state: AppState, action: Action): AppState => {
   }
 }
 
-const defaultDispatch: React.Dispatch<Action> = () => initialState
+const defaultDispatch = (): never => {
+  throw new Error('Forgot to wrap component in a StoreProvider')
+}
 
-const Store = React.createContext({
+type StoreContextValue = {
+  state: AppState
+  dispatch: React.Dispatch<Action>
+}
+
+const Store = React.createContext<StoreContextValue>({
   state: initialState,
   dispatch: defaultDispatch,
 })
