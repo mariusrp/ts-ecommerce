@@ -43,9 +43,10 @@ export const sampleProduct: Product[] = [
     image: '/images/disc4.webp',
     category: 'Sample Category',
     brand: 'Sample Brand',
-    price: 82,
-    countInStock: 10,
-    description: 'Sample Description',
+    price: 20,
+    countInStock: 0,
+    description:
+      'Sample Description lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.   ',
     rating: 4.5,
     numReviews: 5,
   },
