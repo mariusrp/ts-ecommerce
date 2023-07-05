@@ -1,6 +1,6 @@
 import { Product } from './types/Product'
 
-export const sampleProduct: Product[] = [
+export const sampleProducts: Product[] = [
   {
     name: 'Sample Product',
     slug: 'sample-product',

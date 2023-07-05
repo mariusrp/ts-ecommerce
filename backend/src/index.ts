@@ -1,8 +1,21 @@
 import cors from 'cors'
 import express, { Request, Response } from 'express'
-import { sampleProduct } from './data'
+import { sampleProducts } from './data'
+import dotenv from 'dotenv'
+import mongoose from 'mongoose'
+import { productRouter } from './routers/productRouter'
+import { seedRouter } from './routers/seedRouter'
 
+dotenv.config()
+
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017'
 const app = express()
+mongoose.set('strictQuery', true)
+mongoose
+  .connect(mongoURI)
+  .then(() => console.log('MongoDB connected'))
+  .catch((err) => console.log(err))
+
 app.use(
   cors({
     credentials: true,
@@ -10,14 +23,8 @@ app.use(
   })
 )
 
-app.get('/api/products', (req: Request, res: Response) => {
-  res.json(sampleProduct)
-})
-
-app.get('/api/products/:slug', (req: Request, res: Response) => {
-  const product = sampleProduct.find((p) => p.slug === req.params.slug)
-  res.json(product)
-})
+app.use('/api/products', productRouter)
+app.use('/api/seed', seedRouter)
 
 const PORT = 4000
 
