@@ -30,6 +30,11 @@ export default function CartPage() {
     navigate('/login?redirect=shipping')
   }
 
+  const removeFromCartHandler = (id: string) => {
+    dispatch({ type: 'REMOVE_FROM_CART', payload: id })
+    toast.info('Product removed from cart')
+  }
+
   return (
     <div>
       <Helmet>
@@ -78,7 +83,10 @@ export default function CartPage() {
                     </Col>
                     <Col md={3}>${item.price}</Col>
                     <Col md={2}>
-                      <Button variant={mode}>
+                      <Button
+                        onClick={() => removeFromCartHandler(item._id)}
+                        variant={mode}
+                      >
                         <i className="fas fa-trash"></i>
                       </Button>
                     </Col>

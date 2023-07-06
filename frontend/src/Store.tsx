@@ -47,6 +47,7 @@ const initialState: AppState = {
 type Action =
   | { type: 'TOGGLE_MODE' }
   | { type: 'ADD_TO_CART'; payload: CartItem }
+  | { type: 'REMOVE_FROM_CART'; payload: string }
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -64,6 +65,16 @@ function reducer(state: AppState, action: Action): AppState {
         : [...state.cart.cartItems, newItem]
       localStorage.setItem('cartItems', JSON.stringify(cartItems))
       return { ...state, cart: { ...state.cart, cartItems } }
+    case 'REMOVE_FROM_CART':
+      const id = action.payload
+      const cartItemsAfterDelete = state.cart.cartItems.filter(
+        (item: CartItem) => item._id !== id
+      )
+      localStorage.setItem('cartItems', JSON.stringify(cartItemsAfterDelete))
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: cartItemsAfterDelete },
+      }
     default:
       return state
   }
