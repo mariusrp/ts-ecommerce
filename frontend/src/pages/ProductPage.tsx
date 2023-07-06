@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useGetProductDetailsBySlugQuery } from '../hooks/productHooks'
 import MessageBox from '../components/MessageBox'
 import { ApiError } from '../types/ApiError'
@@ -7,6 +7,10 @@ import { getError } from '../utils'
 import LoadingBox from '../components/LoadingBox'
 import { Badge, Button, Card, Col, ListGroup, Row } from 'react-bootstrap'
 import Rating from '../components/Rating'
+import { useContext } from 'react'
+import { Store } from '../Store'
+import { toast } from 'react-toastify'
+import { convertProductToCartItem } from '../utils'
 
 export default function ProductPage() {
   const params = useParams()
@@ -18,6 +22,26 @@ export default function ProductPage() {
     isLoading,
     error,
   } = useGetProductDetailsBySlugQuery(slug!)
+
+  const { state, dispatch } = useContext(Store)
+  const { cart } = state
+
+  const navigate = useNavigate()
+
+  const addToCartHandler = () => {
+    const existItem = cart.cartItems.find((x) => x._id === product!._id)
+    const quantity = existItem ? existItem.quantity + 1 : 1
+    if (product!.countInStock < quantity) {
+      toast.warn('Sorry. Product is out of stock')
+      return
+    }
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: { ...convertProductToCartItem(product!), quantity },
+    })
+    toast.success('Product added to cart')
+    navigate('/cart')
+  }
 
   return isLoading ? (
     <LoadingBox />
@@ -76,7 +100,9 @@ export default function ProductPage() {
                 <ListGroup.Item>
                   {product && product.countInStock > 0 ? (
                     <div className="d-grid">
-                      <Button variant="primary">Add to cart</Button>
+                      <Button variant="primary" onClick={addToCartHandler}>
+                        Add to cart
+                      </Button>
                     </div>
                   ) : (
                     <Button variant="light" disabled>
