@@ -75,7 +75,7 @@ export default function SignInPage() {
         New customer?{' '}
         <Button
           variant="link"
-          onClick={() => navigate(`/register?redirect=${redirect}`)}
+          onClick={() => navigate(`/signup?redirect=${redirect}`)}
         >
           Create your account
         </Button>

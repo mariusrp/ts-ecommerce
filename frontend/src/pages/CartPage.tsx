@@ -27,7 +27,7 @@ export default function CartPage() {
   }
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=shipping')
+    navigate('/signin?redirect=/shipping')
   }
 
   const removeFromCartHandler = (id: string) => {
