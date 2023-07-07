@@ -1,10 +1,10 @@
 import cors from 'cors'
-import express, { Request, Response } from 'express'
-import { sampleProducts } from './data'
+import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { productRouter } from './routers/productRouter'
 import { seedRouter } from './routers/seedRouter'
+import { userRouter } from './routers/userRouter'
 
 dotenv.config()
 
@@ -22,8 +22,14 @@ app.use(
     origin: ['http://localhost:5173'],
   })
 )
+{
+  /* NEW*/
+}
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/products', productRouter)
+app.use('/api/users', userRouter)
 app.use('/api/seed', seedRouter)
 
 const PORT = 4000
