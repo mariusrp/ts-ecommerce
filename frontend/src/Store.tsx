@@ -1,11 +1,13 @@
 import React from 'react'
 import { Cart, CartItem } from './types/Cart'
+import { UserInfo } from './types/UserInfo'
 
 type Mode = 'light' | 'dark'
 
 type AppState = {
   mode: Mode
   cart: Cart
+  userInfo?: UserInfo
 }
 
 const getInitialMode = (): Mode => {
@@ -39,15 +41,25 @@ const getInitialCart = (): Cart => {
   return cart
 }
 
+const getInitialUserInfo = (): UserInfo | undefined => {
+  const userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo') as string)
+    : undefined
+  return userInfo
+}
+
 const initialState: AppState = {
   mode: getInitialMode(),
   cart: getInitialCart(),
+  userInfo: getInitialUserInfo(),
 }
 
 type Action =
   | { type: 'TOGGLE_MODE' }
   | { type: 'ADD_TO_CART'; payload: CartItem }
   | { type: 'REMOVE_FROM_CART'; payload: string }
+  | { type: 'USER_SIGNIN'; payload: UserInfo }
+  | { type: 'USER_SIGNOUT' }
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -74,6 +86,32 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         cart: { ...state.cart, cartItems: cartItemsAfterDelete },
+      }
+    case 'USER_SIGNIN':
+      return { ...state, userInfo: action.payload }
+
+    case 'USER_SIGNOUT':
+      return {
+        mode:
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light',
+        cart: {
+          cartItems: [],
+          shippingAddress: {
+            fullName: '',
+            address: '',
+            city: '',
+            postalCode: '',
+            country: '',
+          },
+          paymentMethod: 'PayPal',
+          itemPrice: 0,
+          shippingPrice: 0,
+          taxPrice: 0,
+          totalPrice: 0,
+        },
       }
     default:
       return state
