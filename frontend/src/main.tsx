@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -18,7 +19,7 @@ import { StoreProvider } from './Store'
 import CartPage from './pages/CartPage.tsx'
 import SignInPage from './pages/SignInPage.tsx'
 import SignupPage from './pages/SignupPage.tsx'
-import ShippingPage from './pages/ShippingPage.tsx'
+import ShippingAddressPage from './pages/ShippingAddressPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +29,7 @@ const router = createBrowserRouter(
       <Route path="cart" element={<CartPage />} />
       <Route path="signin" element={<SignInPage />} />
       <Route path="signup" element={<SignupPage />} />
-      <Route path="shipping" element={<ShippingPage />} />
+      <Route path="shipping" element={<ShippingAddressPage />} />
       {/* <Route path="dashboard" element={<Dashboard />} /> */}
       {/* ... etc. */}
     </Route>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Cart, CartItem } from './types/Cart'
+import { Cart, CartItem, ShippingAdress } from './types/Cart'
 import { UserInfo } from './types/UserInfo'
 
 type Mode = 'light' | 'dark'
@@ -60,6 +60,7 @@ type Action =
   | { type: 'REMOVE_FROM_CART'; payload: string }
   | { type: 'USER_SIGNIN'; payload: UserInfo }
   | { type: 'USER_SIGNOUT' }
+  | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAdress }
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -112,6 +113,11 @@ function reducer(state: AppState, action: Action): AppState {
           taxPrice: 0,
           totalPrice: 0,
         },
+      }
+    case 'SAVE_SHIPPING_ADDRESS':
+      return {
+        ...state,
+        cart: { ...state.cart, shippingAddress: action.payload },
       }
     default:
       return state
