@@ -66,6 +66,7 @@ type Action =
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'TOGGLE_MODE':
+      localStorage.setItem('mode', state.mode === 'light' ? 'dark' : 'light')
       return { ...state, mode: state.mode === 'light' ? 'dark' : 'light' }
     case 'ADD_TO_CART':
       const newItem = action.payload
