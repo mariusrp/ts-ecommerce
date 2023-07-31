@@ -33,7 +33,7 @@ const getInitialCart = (): Cart => {
     paymentMethod: localStorage.getItem('paymentMethod')
       ? JSON.parse(localStorage.getItem('paymentMethod') as string)
       : 'PayPal',
-    itemPrice: 0,
+    itemsPrice: 0,
     shippingPrice: 0,
     taxPrice: 0,
     totalPrice: 0,
@@ -58,6 +58,7 @@ type Action =
   | { type: 'TOGGLE_MODE' }
   | { type: 'ADD_TO_CART'; payload: CartItem }
   | { type: 'REMOVE_FROM_CART'; payload: string }
+  | { type: 'CART_CLEAR' }
   | { type: 'USER_SIGNIN'; payload: UserInfo }
   | { type: 'USER_SIGNOUT' }
   | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAdress }
@@ -90,6 +91,9 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         cart: { ...state.cart, cartItems: cartItemsAfterDelete },
       }
+    case 'CART_CLEAR':
+      return { ...state, cart: { ...state.cart, cartItems: [] } }
+
     case 'USER_SIGNIN':
       return { ...state, userInfo: action.payload }
     case 'USER_SIGNOUT':
@@ -109,7 +113,7 @@ function reducer(state: AppState, action: Action): AppState {
             country: '',
           },
           paymentMethod: 'PayPal',
-          itemPrice: 0,
+          itemsPrice: 0,
           shippingPrice: 0,
           taxPrice: 0,
           totalPrice: 0,
@@ -121,6 +125,7 @@ function reducer(state: AppState, action: Action): AppState {
         cart: { ...state.cart, shippingAddress: action.payload },
       }
     case 'SAVE_PAYMENT_METHOD':
+      localStorage.setItem('paymentMethod', JSON.stringify(action.payload))
       return {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },

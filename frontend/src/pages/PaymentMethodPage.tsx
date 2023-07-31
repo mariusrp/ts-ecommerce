@@ -24,8 +24,7 @@ export default function PaymentMethodPage() {
 
   const submitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName })
-    localStorage.setItem('paymentMethod', paymentMethodName)
+    dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName }) // Correct
     navigate('/placeorder')
   }
 
