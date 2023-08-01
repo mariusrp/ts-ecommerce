@@ -5,6 +5,19 @@ import { OrderModel } from '../models/orderModel'
 import { Product } from '../models/productModel'
 export const orderRouter = express.Router()
 
+orderRouter.get(
+  '/:id',
+  isAuth,
+  asyncHandler(async (req: Request, res: Response) => {
+    const order = await OrderModel.findById(req.params.id)
+    if (order) {
+      res.json(order)
+    } else {
+      res.status(404).json({ message: 'Order not found' })
+    }
+  })
+)
+
 orderRouter.post(
   '/',
   isAuth,

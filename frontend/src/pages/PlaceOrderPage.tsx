@@ -14,12 +14,12 @@ export default function PlaceOrderPage() {
   const navigate = useNavigate()
 
   const { state, dispatch } = useContext(Store)
-  const { cart, userInfo } = state
+  const { cart } = state
 
   const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100 // 123.456 => 123.46
 
   cart.itemsPrice = round2(
-    cart.cartItems.reduce((a, c) => a + c.price * c.price, 0)
+    cart.cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
   )
   cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10)
   cart.taxPrice = round2(0.15 * cart.itemsPrice)

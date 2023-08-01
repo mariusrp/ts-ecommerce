@@ -4,11 +4,11 @@ import { User } from './User'
 export type Order = {
   _id: string
   user: User
-  OrderItems: CartItem[]
+  orderItems: CartItem[]
   shippingAddress: ShippingAdress
   createdAt: string
   paymentMethod: string
-  payedAt: string
+  paidAt: string
   isPaid: boolean
   deliveredAt: string
   isDelivered: boolean

@@ -15,9 +15,9 @@ const getInitialMode = (): Mode => {
   const mode =
     storedMode ||
     (window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
+    window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
-      : 'light'
+      : 'light')
 
   return mode
 }
@@ -93,7 +93,6 @@ function reducer(state: AppState, action: Action): AppState {
       }
     case 'CART_CLEAR':
       return { ...state, cart: { ...state.cart, cartItems: [] } }
-
     case 'USER_SIGNIN':
       return { ...state, userInfo: action.payload }
     case 'USER_SIGNOUT':
