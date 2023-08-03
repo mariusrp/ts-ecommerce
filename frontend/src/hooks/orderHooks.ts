@@ -16,6 +16,13 @@ export const useGetPaypalClientIdQuery = () =>
       (await apiClient.get<{ clientId: string }>('api/keys/paypal')).data,
   })
 
+export const useGetOrderHistoryQuery = () =>
+  useQuery({
+    queryKey: ['orderHistory'],
+    queryFn: async () =>
+      (await apiClient.get<[Order]>('api/orders/myorders')).data,
+  })
+
 export const usePayOrderMutation = () =>
   useMutation({
     mutationFn: async (details: { orderId: string }) =>
