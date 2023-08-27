@@ -1,91 +1,61 @@
-import { useContext, useEffect } from 'react'
-import {
-  Badge,
-  Button,
-  Container,
-  Nav,
-  NavDropdown,
-  Navbar,
-} from 'react-bootstrap'
+import { useContext, useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { Store } from './Store'
-import { LinkContainer } from 'react-router-bootstrap'
+import NavigationBar from './components/NavigationBar'
+import Footer from './components/Footer'
 
 function App() {
+  const [marginSize, setMarginSize] = useState(15)
+
+  const updateMarginSize = () => {
+    const screenWidth = window.innerWidth
+
+    if (screenWidth < 768) {
+      setMarginSize(5)
+    } else if (screenWidth > 1068) {
+      setMarginSize(12)
+    } else if (screenWidth >= 992 && screenWidth <= 1068) {
+      setMarginSize(12 - ((12 - 5) * (screenWidth - 992)) / (1068 - 992))
+    } else {
+      setMarginSize(5 + ((15 - 5) * (screenWidth - 768)) / (992 - 768))
+    }
+  }
+
+  useEffect(() => {
+    updateMarginSize()
+    window.addEventListener('resize', updateMarginSize)
+
+    return () => {
+      window.removeEventListener('resize', updateMarginSize)
+    }
+  }, [])
+
   const {
-    state: { mode, cart, userInfo },
-    dispatch,
+    state: { mode },
   } = useContext(Store)
 
   useEffect(() => {
     document.body.setAttribute('data-bs-theme', mode)
   }, [mode])
 
-  const switchModeHandler = () => {
-    dispatch({ type: 'TOGGLE_MODE' })
-  }
-
-  const signoutHandler = () => {
-    dispatch({ type: 'USER_SIGNOUT' })
-    localStorage.removeItem('userInfo')
-    localStorage.removeItem('cartItems')
-    localStorage.removeItem('shippingAddress')
-    localStorage.removeItem('paymentMethod')
-    window.location.href = '/signin'
-  }
-
   return (
-    <div className="d-flex flex-column vh-100">
+    <div className="page-container">
       <ToastContainer position="bottom-center" limit={1} />
       <header>
-        <Navbar expand="lg">
-          <Container>
-            <LinkContainer to="/">
-              <Navbar.Brand>Frisbee golf</Navbar.Brand>
-            </LinkContainer>
-          </Container>
-          <Nav>
-            <Button variant={mode} onClick={switchModeHandler}>
-              <i className={mode === 'light' ? 'fa fa-sun' : 'fa fa-moon'}></i>
-            </Button>
-            <Link to="/cart" className="nav-link">
-              Cart
-              {cart.cartItems.length > 0 && (
-                <Badge pill bg="danger">
-                  {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                </Badge>
-              )}
-            </Link>
-            {userInfo ? (
-              <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                <LinkContainer to="/orderhistory">
-                  <NavDropdown.Item>Order History</NavDropdown.Item>
-                </LinkContainer>
-                <Link
-                  className="dropdown-item"
-                  to="#signout"
-                  onClick={signoutHandler}
-                >
-                  Sign Out
-                </Link>
-              </NavDropdown>
-            ) : (
-              <Link className="nav-link" to={'/signin'}>
-                Sign In
-              </Link>
-            )}
-          </Nav>
-        </Navbar>
+        <NavigationBar />
       </header>
-      <main>
-        <Container className="mt-4">
+      <main
+        className="content-container"
+        style={{ padding: `0 ${marginSize}vw` }}
+      >
+        <div>
           <Outlet />
-        </Container>
+        </div>
       </main>
       <footer>
-        <div className="text-center">All rights reserved</div>
+        <Footer />
       </footer>
     </div>
   )

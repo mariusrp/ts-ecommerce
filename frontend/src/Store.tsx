@@ -8,6 +8,8 @@ type AppState = {
   mode: Mode
   cart: Cart
   userInfo?: UserInfo
+  searchKeyword: string
+  searchTag: string
 }
 
 const getInitialMode = (): Mode => {
@@ -52,6 +54,8 @@ const initialState: AppState = {
   mode: getInitialMode(),
   cart: getInitialCart(),
   userInfo: getInitialUserInfo(),
+  searchKeyword: '',
+  searchTag: '',
 }
 
 type Action =
@@ -63,6 +67,8 @@ type Action =
   | { type: 'USER_SIGNOUT' }
   | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAdress }
   | { type: 'SAVE_PAYMENT_METHOD'; payload: string }
+  | { type: 'UPDATE_SEARCH_KEYWORD'; payload: string }
+  | { type: 'UPDATE_SEARCH_TAG'; payload: string }
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -95,8 +101,15 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, cart: { ...state.cart, cartItems: [] } }
     case 'USER_SIGNIN':
       return { ...state, userInfo: action.payload }
+
+    case 'UPDATE_SEARCH_KEYWORD':
+      return { ...state, searchKeyword: action.payload }
+
+    case 'UPDATE_SEARCH_TAG':
+      return { ...state, searchTag: action.payload }
     case 'USER_SIGNOUT':
       return {
+        ...state,
         mode:
           window.matchMedia &&
           window.matchMedia('(prefers-color-scheme: dark)').matches

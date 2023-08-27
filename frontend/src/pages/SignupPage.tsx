@@ -46,7 +46,7 @@ export default function SignupPage() {
   }
 
   return (
-    <Container className="small-container">
+    <Container>
       <Helmet>
         <title>Sign Up</title>
       </Helmet>

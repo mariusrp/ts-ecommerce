@@ -1,6 +1,4 @@
-import { useContext } from 'react'
-import { Store } from '../Store'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useGetOrderHistoryQuery } from '../hooks/orderHooks'
 import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Store } from '../Store'
 import { Navigate, Outlet } from 'react-router-dom'
 
-export default function ProtectedRoute() {
+export default function ProtectedUserRoute() {
   const {
     state: { userInfo },
   } = useContext(Store)

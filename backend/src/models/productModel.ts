@@ -1,8 +1,29 @@
 import { ModelOptions, prop, getModelForClass } from '@typegoose/typegoose'
 
+export class Review {
+  @prop({ required: true })
+  public _id!: string
+
+  @prop({ required: true })
+  public user!: string
+
+  @prop({ required: true })
+  public rating!: number
+
+  @prop({ required: true })
+  public email!: string
+
+  @prop({ required: true })
+  public comment!: string
+
+  @prop({ required: true })
+  public createdAt!: Date
+}
+
 @ModelOptions({ schemaOptions: { collection: 'products', timestamps: true } })
 export class Product {
   public _id?: string
+
   @prop({ required: true })
   public name!: string
 
@@ -10,7 +31,7 @@ export class Product {
   public slug!: string
 
   @prop({ required: true })
-  public image!: string
+  public images!: string[]
 
   @prop({ required: true })
   public category!: string
@@ -32,6 +53,9 @@ export class Product {
 
   @prop({ required: true, default: 0 })
   public numReviews!: number
+
+  @prop({ required: true, default: [] })
+  public reviews!: Review[]
 }
 
 export const ProductModel = getModelForClass(Product)

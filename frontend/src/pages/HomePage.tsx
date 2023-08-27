@@ -6,6 +6,8 @@ import { Helmet } from 'react-helmet-async'
 import { useGetProductsQuery } from '../hooks/productHooks'
 import { getError } from '../utils'
 import { ApiError } from '../types/ApiError'
+import ProductCarousel from '../components/ProductCarousel'
+import SubHeader from '../components/SubHeader'
 
 export default function HomePage() {
   const { data: products, isLoading, error } = useGetProductsQuery()
@@ -15,15 +17,22 @@ export default function HomePage() {
   ) : error ? (
     <MessageBox variant="danger">{getError(error as ApiError)}</MessageBox>
   ) : (
-    <Row>
-      <Helmet>
-        <title>Frisbee Golf Disks</title>
-      </Helmet>
-      {products!.map((product) => (
-        <Col key={product.slug} sm={6} md={4} lg={3}>
-          <ProductItem product={product} />
-        </Col>
-      ))}
-    </Row>
+    <>
+      {' '}
+      <SubHeader />
+      <ProductCarousel />
+      <Row>
+        <Helmet>
+          <title>AutomateHub</title>
+        </Helmet>
+
+        <h2 className="my-3">Latest Products</h2>
+        {products!.map((product) => (
+          <Col key={product.slug} sm={12} md={6} lg={4} xl={3} className="mb-3">
+            <ProductItem product={product} />
+          </Col>
+        ))}
+      </Row>
+    </>
   )
 }

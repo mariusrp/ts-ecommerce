@@ -21,33 +21,44 @@ export default function ProductItem({ product }: { product: Product }) {
       window.alert('Sorry. Product is out of stock')
       return
     }
-    dispatch({ type: 'ADD_TO_CART', payload: { ...product, quantity } })
-    toast.success('Product added to cart')
+    dispatch({ type: 'ADD_TO_CART', payload: item })
+    toast.success('Product is added to cart')
   }
 
   return (
-    <Card>
-      <Link to={`/product/${product.slug}`}>
-        <img src={product.image} alt={product.name} className="card-img-top" />
-      </Link>
-      <Card.Body>
-        <Link to={`/product/${product.slug}`}>
-          <Card.Title>{product.name}</Card.Title>
-        </Link>
-        <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
-        {product.countInStock === 0 ? (
-          <Button variant="light" disabled>
-            Out of stock
-          </Button>
-        ) : (
-          <Button
-            onClick={() => addToCartHandler(convertProductToCartItem(product))}
-          >
-            Add to cart
-          </Button>
-        )}
-      </Card.Body>
-    </Card>
+    <Link to={`/product/${product.slug}`} className="card-link">
+      <Card className="product-card">
+        <div className="image-container">
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="card-img-top image"
+          />
+        </div>
+        <Card.Body>
+          <div className="product-info">
+            <Card.Title className="product-item-title">
+              {product.name}
+            </Card.Title>
+            {product.reviews.length} reviews
+            <Rating rating={product.rating} />
+            <Card.Text className="product-price">${product.price}</Card.Text>
+          </div>
+          {product.countInStock === 0 ? (
+            <Button variant="light" disabled>
+              Out of stock
+            </Button>
+          ) : (
+            <Button
+              onClick={() =>
+                addToCartHandler(convertProductToCartItem(product))
+              }
+            >
+              Add to cart
+            </Button>
+          )}
+        </Card.Body>
+      </Card>
+    </Link>
   )
 }

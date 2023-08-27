@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import apiClient from '../apiClient'
 import { UserInfo } from '../types/UserInfo'
 
@@ -32,5 +32,27 @@ export const useSignupMutation = () =>
           email,
           password,
         })
+      ).data,
+  })
+
+export const getUserInfoQuery = () =>
+  useQuery({
+    queryKey: ['userInfo'],
+    queryFn: async () =>
+      (await apiClient.get<UserInfo>('api/users/profile')).data,
+  })
+
+export const useUpdateUserProfileMutation = () =>
+  useMutation({
+    mutationFn: async (user: {
+      name: string
+      email: string
+      password: string
+    }) =>
+      (
+        await apiClient.put<{ message: string; user: UserInfo }>(
+          'api/users/profile',
+          user
+        )
       ).data,
   })
