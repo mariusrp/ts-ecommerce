@@ -56,7 +56,7 @@ export default function ProductPage() {
 
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const handleSelect = (selectedIndex: number, e: any) => {
+  const handleSelect = (selectedIndex: number) => {
     setActiveIndex(selectedIndex)
   }
 

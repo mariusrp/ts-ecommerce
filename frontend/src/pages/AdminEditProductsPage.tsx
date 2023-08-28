@@ -22,12 +22,7 @@ export default function AdminEditProductsPage() {
   })
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
-  const {
-    data: productDetails,
-    isLoading,
-    error,
-    refetch,
-  } = useGetProductDetailsByIdQuery(id!)
+  const { data: productDetails } = useGetProductDetailsByIdQuery(id!)
 
   const { mutateAsync: updateProduct } = useEditProductMutation()
 

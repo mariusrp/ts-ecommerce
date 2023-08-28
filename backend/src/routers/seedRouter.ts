@@ -14,8 +14,5 @@ seedRouter.get(
 
     const createdUsers = await UserModel.insertMany(sampleUsers)
     res.json({ createdProducts, createdUsers })
-
-    //delete all product-reviews
-    // await ProductModel.updateMany({}, { $set: { reviews: [] } })
   })
 )

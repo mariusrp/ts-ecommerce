@@ -1,7 +1,7 @@
 import cors from 'cors'
-import express from 'express'
-import dotenv from 'dotenv'
+import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
+import path from 'path'
 import { productRouter } from './routers/productRouter'
 import { seedRouter } from './routers/seedRouter'
 import { userRouter } from './routers/userRouter'
@@ -9,7 +9,7 @@ import { orderRouter } from './routers/orderRouter'
 import { keyRouter } from './routers/keyRouter'
 import { adminRouter } from './routers/adminRouter'
 
-dotenv.config()
+require('dotenv').config()
 
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017'
 const app = express()
@@ -34,8 +34,13 @@ app.use('/api/orders', orderRouter)
 app.use('/api/seed', seedRouter)
 app.use('/api/keys', keyRouter)
 app.use('/api/admin', adminRouter)
+app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 
-const PORT = 4000
+app.get('*', (req: Request, res: Response) =>
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
+)
+
+const PORT: number = parseInt(process.env.PORT || '4000', 10)
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)

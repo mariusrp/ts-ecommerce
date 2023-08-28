@@ -5,7 +5,7 @@ import {
 import { Button, Form, ListGroup } from 'react-bootstrap'
 import { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Product, Review } from '../types/Product'
+import { Product } from '../types/Product'
 import { Store } from '../Store'
 import { Link } from 'react-router-dom'
 import { calculateAverageRating } from '../utils'
