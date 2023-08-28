@@ -30,3 +30,5 @@ export default function SubHeader() {
     </div>
   )
 }
+
+//export categories

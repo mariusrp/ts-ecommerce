@@ -1,8 +1,3 @@
-import LoadingBox from './LoadingBox'
-import MessageBox from './MessageBox'
-import { ApiError } from '../types/ApiError'
-import { getError } from '../utils'
-import { useGetCategoriesQuery } from '../hooks/productHooks'
 import { Dropdown, ListGroup, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useContext } from 'react'
@@ -13,11 +8,21 @@ import { MdLogout } from 'react-icons/md'
 import { CgProfile } from 'react-icons/cg'
 import { GoSignIn } from 'react-icons/go'
 import { LiaShippingFastSolid } from 'react-icons/lia'
+import { AiFillHome } from 'react-icons/ai'
 
 export default function SideBar({ sidebarIsOpen, setSidebarIsOpen }: any) {
-  const { data: categories, isLoading, error } = useGetCategoriesQuery()
   const { state, dispatch } = useContext(Store)
   const { mode, cart, userInfo } = state
+
+  const categories = [
+    { text: 'All', value: 'all' },
+    { text: 'Displays', value: 'displays' },
+    { text: 'Speakers', value: 'speakers' },
+    { text: 'Cameras', value: 'cameras' },
+    { text: 'Security', value: 'security' },
+    { text: 'Accessories', value: 'accessories' },
+    { text: 'Other', value: 'other' },
+  ]
 
   const signoutHandler = () => {
     dispatch({ type: 'USER_SIGNOUT' })
@@ -65,29 +70,38 @@ export default function SideBar({ sidebarIsOpen, setSidebarIsOpen }: any) {
                 />
               </div>
             </ListGroup.Item>
+            <ListGroup.Item action>
+              <LinkContainer
+                to="/"
+                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+              >
+                <Nav.Link>
+                  <span className="d-flex justify-center items-center">
+                    <AiFillHome className="icon" />
+                    Home
+                  </span>
+                </Nav.Link>
+              </LinkContainer>
+            </ListGroup.Item>
             <ListGroup.Item>
               <div>
                 <strong>Categories</strong>
               </div>
             </ListGroup.Item>
-            {isLoading ? (
-              <LoadingBox />
-            ) : error ? (
-              <MessageBox variant="danger">
-                {getError(error as ApiError)}
-              </MessageBox>
-            ) : (
-              categories!.map((category) => (
-                <ListGroup.Item action key={category}>
-                  <LinkContainer
-                    to={{ pathname: '/search', search: `category=${category}` }}
-                    onClick={() => setSidebarIsOpen(false)}
-                  >
-                    <Nav.Link> {category}</Nav.Link>
-                  </LinkContainer>
-                </ListGroup.Item>
-              ))
-            )}{' '}
+            {categories!.map((category) => (
+              <ListGroup.Item action key={category.text}>
+                <LinkContainer
+                  to={{
+                    pathname: '/search',
+                    search: `tag=${category.value}`,
+                  }}
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link> {category.text}</Nav.Link>
+                </LinkContainer>
+              </ListGroup.Item>
+            ))}
+
             <ListGroup.Item action key="cart">
               <Link
                 to="/cart"

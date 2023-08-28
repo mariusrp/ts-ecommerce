@@ -3,16 +3,27 @@ import { LinkContainer } from 'react-router-bootstrap'
 import SearchBox from './SearchBox'
 import { Link } from 'react-router-dom'
 import { BsCart4 } from 'react-icons/bs'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Store } from '../Store'
 import SideBar from './SideBar'
-import { SiDsautomobiles } from 'react-icons/si'
+import { AiFillHome } from 'react-icons/ai'
 
 export default function NavigationBar() {
   const {
     state: { mode, cart, userInfo },
     dispatch,
   } = useContext(Store)
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   const switchModeHandler = () => {
     dispatch({ type: 'TOGGLE_MODE' })
@@ -32,23 +43,27 @@ export default function NavigationBar() {
   return (
     <>
       <Navbar
-        className="d-flex flex-column align-items-stretch p-4"
+        className="d-flex flex-column align-items-stretch p-4 "
         bg="dark"
         variant="dark"
         expand="lg"
       >
         <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center justify-center">
             <Link
               to="#"
-              className="nav-link header-link p-3 sidebar-toggle w-10 "
+              className="nav-link header-link sidebar-toggle w-10 px-1"
               onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
             >
-              <i className="fas fa-bars" style={{ fontSize: '24px' }}></i>
+              <i className="fas fa-bars" style={{ fontSize: '32px' }}></i>
             </Link>
-            <LinkContainer to="/">
-              <NavbarBrand>
-                {screen.width > 768 ? 'AutomateHub' : <SiDsautomobiles />}
+            <LinkContainer to="/" className="px-2">
+              <NavbarBrand className="d-flex align-items-center">
+                {screenWidth > 768 ? (
+                  'AutomateHub'
+                ) : (
+                  <AiFillHome style={{ fontSize: '32px' }} />
+                )}
               </NavbarBrand>
             </LinkContainer>
           </div>

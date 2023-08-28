@@ -34,7 +34,7 @@ export default function SearchBox() {
   const formatResult = (product: Product) => {
     const parts = product.name.split(new RegExp(`(${searchKeyword})`, 'gi'))
     return (
-      <div className="flex">
+      <div className="flex px-1">
         <img
           src={product.images[0]}
           alt={product.name}
@@ -77,7 +77,7 @@ export default function SearchBox() {
   }, 500)
 
   return (
-    <div className="searchbox-container">
+    <div className="searchbox-container flex-grow-1">
       <form onSubmit={handleSearchSubmit}>
         {products && (
           <ReactSearchAutocomplete

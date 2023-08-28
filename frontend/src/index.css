@@ -110,6 +110,16 @@ a.main-nav-link:hover,
   width: 50%;
 }
 
+@media (max-width: 1000px) {
+  .sub-header {
+    display: none;
+  }
+
+  .searchbox-container {
+    width: 100%;
+  }
+}
+
 [data-bs-theme='dark'] {
   --bs-body-bg: #212529;
   --bs-body-color: #d8d6d6;
