@@ -307,6 +307,10 @@ footer {
   color: inherit;
 }
 
+.card-link:hover {
+  cursor: pointer;
+}
+
 .margin-top {
   margin-top: 10rem;
 }

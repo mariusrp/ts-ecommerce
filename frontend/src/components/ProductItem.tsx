@@ -1,18 +1,19 @@
 import { Button, Card } from 'react-bootstrap'
 import { Product } from '../types/Product'
-import { Link } from 'react-router-dom'
 import Rating from './Rating'
 import { useContext } from 'react'
 import { Store } from '../Store'
 import { convertProductToCartItem } from '../utils'
 import { CartItem } from '../types/Cart'
 import { toast } from 'react-toastify'
-
+import { useNavigate } from 'react-router-dom'
 export default function ProductItem({ product }: { product: Product }) {
   const { state, dispatch } = useContext(Store)
   const {
     cart: { cartItems },
   } = state
+
+  const navigate = useNavigate()
 
   const addToCartHandler = (item: CartItem) => {
     const existItem = cartItems.find((x) => x._id === product._id)
@@ -25,8 +26,17 @@ export default function ProductItem({ product }: { product: Product }) {
     toast.success('Product is added to cart')
   }
 
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    // Prevent navigation when the "Add to cart" button is clicked
+    if ((event.target as HTMLElement).tagName === 'BUTTON') {
+      event.stopPropagation()
+    } else {
+      navigate(`/product/${product.slug}`)
+    }
+  }
+
   return (
-    <Link to={`/product/${product.slug}`} className="card-link">
+    <div onClick={handleClick} className="card-link">
       <Card className="product-card">
         <div className="image-container">
           <img
@@ -59,6 +69,6 @@ export default function ProductItem({ product }: { product: Product }) {
           )}
         </Card.Body>
       </Card>
-    </Link>
+    </div>
   )
 }

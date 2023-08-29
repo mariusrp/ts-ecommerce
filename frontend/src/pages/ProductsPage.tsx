@@ -38,9 +38,15 @@ export default function ProductsPage() {
   return (
     <Row>
       <Helmet>
-        <title>Products</title>
+        <title>Proshop - Products</title>
       </Helmet>
-      <h2 className="my-3">Products</h2>
+      <h2 className="my-3">
+        {searchKeyword
+          ? `Search results for "${searchKeyword}"`
+          : urlTag !== 'all'
+          ? `"${urlTag}"`
+          : 'All Products'}
+      </h2>
       {products?.length === 0 && <p>No products found.</p>}
       {products?.map((product) => (
         <Col key={product._id} sm={12} md={6} lg={4} xl={3} className="mb-3">
