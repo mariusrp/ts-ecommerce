@@ -57,28 +57,28 @@ export const useCreateProductMutation = () => {
       reviews: Review[]
     }) => {
       try {
-        const formData = new FormData()
+        const dataToSend = new FormData()
 
-        // Append each image as a file to the FormData
-        product.images.forEach((image) => {
-          formData.append('images', image)
+        // Iterate over the images from the product and append to the FormData instance
+        product.images.forEach((image: File) => {
+          dataToSend.append('images', image)
         })
 
         // Append other fields to the FormData
-        formData.append('name', product.name)
-        formData.append('slug', product.slug)
-        formData.append('price', product.price.toString())
-        formData.append('description', product.description)
-        formData.append('brand', product.brand)
-        formData.append('category', product.category)
-        formData.append('rating', product.rating.toString())
-        formData.append('countInStock', product.countInStock.toString())
-        formData.append('numReviews', product.numReviews.toString())
+        dataToSend.append('name', product.name)
+        dataToSend.append('slug', product.slug)
+        dataToSend.append('price', product.price.toString())
+        dataToSend.append('description', product.description)
+        dataToSend.append('brand', product.brand)
+        dataToSend.append('category', product.category)
+        dataToSend.append('rating', product.rating.toString())
+        dataToSend.append('countInStock', product.countInStock.toString())
+        dataToSend.append('numReviews', product.numReviews.toString())
 
         // Send the FormData to the backend
         const response = await apiClient.post<{ message: string }>(
           `api/admin/products/create`,
-          formData,
+          dataToSend, // Use the correct FormData instance
           {
             headers: {
               'Content-Type': 'multipart/form-data', // Set the correct content type

@@ -32,38 +32,6 @@ adminRouter.get(
   })
 )
 
-adminRouter.put(
-  '/products/:id/edit',
-  isAuth,
-  isAdmin,
-  asyncHandler(async (req: Request, res: Response) => {
-    const product = await ProductModel.findById(req.params.id)
-    if (product) {
-      product.name = req.body.name || product.name
-      product.price = req.body.price || product.price
-      product.images = req.body.images || product.images
-      product.brand = req.body.brand || product.brand
-      product.category = req.body.category || product.category
-      product.countInStock = req.body.countInStock || product.countInStock
-      product.description = req.body.description || product.description
-      const updatedProduct = await product.save()
-      res.json({
-        _id: updatedProduct._id,
-        name: updatedProduct.name,
-        price: updatedProduct.price,
-        images: updatedProduct.images,
-        brand: updatedProduct.brand,
-        category: updatedProduct.category,
-        countInStock: updatedProduct.countInStock,
-        description: updatedProduct.description,
-      })
-    } else {
-      res.status(404)
-      throw new Error('Product not found')
-    }
-  })
-)
-
 adminRouter.delete(
   '/users/:id/delete',
   isAuth,
@@ -100,6 +68,51 @@ const storage = multerS3({
 })
 
 const upload = multer({ storage: storage })
+
+adminRouter.put(
+  '/products/:id/edit',
+  isAuth,
+  isAdmin,
+  upload.array('images', 5), // <-- Place the upload middleware here
+  asyncHandler(async (req: Request, res: Response) => {
+    const product = await ProductModel.findById(req.params.id)
+    if (product) {
+      product.name = req.body.name || product.name
+      product.price = req.body.price || product.price
+      product.brand = req.body.brand || product.brand
+      product.category = req.body.category || product.category
+      product.countInStock = req.body.countInStock || product.countInStock
+      product.description = req.body.description || product.description
+
+      // Process new images if they exist
+      if (req.files && (req.files as Express.Multer.File[]).length > 0) {
+        const images = (req.files as Express.Multer.File[]).map(
+          (file: Express.Multer.File) =>
+            `https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/products/${product.category}/${file.filename}`
+        )
+        product.images = images
+      } else {
+        product.images = req.body.images || product.images
+      }
+
+      const updatedProduct = await product.save()
+
+      res.json({
+        _id: updatedProduct._id,
+        name: updatedProduct.name,
+        price: updatedProduct.price,
+        images: updatedProduct.images,
+        brand: updatedProduct.brand,
+        category: updatedProduct.category,
+        countInStock: updatedProduct.countInStock,
+        description: updatedProduct.description,
+      })
+    } else {
+      res.status(404)
+      throw new Error('Product not found')
+    }
+  })
+)
 
 adminRouter.post(
   '/products/create',
