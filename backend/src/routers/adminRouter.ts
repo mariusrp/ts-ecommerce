@@ -80,20 +80,10 @@ adminRouter.delete(
   })
 )
 
-// const storage = multer.diskStorage({
-//   destination: '../frontend/public/images/products',
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
-//     const fileExtension = path.extname(file.originalname)
-//     cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension)
-//   },
-// })
-// const upload = multer({ storage: storage })
-
 aws.config.update({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  region: 'us-west-2',
+  region: 'eu-north-1',
 })
 
 const s3 = new aws.S3()
@@ -137,7 +127,7 @@ adminRouter.post(
 
     const images = (req.files as Express.Multer.File[]).map(
       (file: Express.Multer.File) =>
-        `https://ecommerce-image-bucket.s3.us-west-2.amazonaws.com/products/${file.filename}`
+        `https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/products/${category}/${file.filename}`
     )
 
     console.log(reviews)
