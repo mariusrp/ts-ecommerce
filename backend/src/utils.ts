@@ -19,6 +19,7 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers
   if (authorization) {
     const token = authorization.slice(7, authorization.length)
+    console.log('JWT Secret:', process.env.JWT_SECRET)
     const decoded = jws.verify(token, process.env.JWT_SECRET!)
     req.user = decoded as {
       _id: string
