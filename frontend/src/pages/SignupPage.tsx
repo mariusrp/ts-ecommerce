@@ -34,7 +34,14 @@ export default function SignupPage() {
     if (password !== confirmPassword) {
       toast.error('Passwords do not match')
       return
+    } else if (password.length < 6) {
+      toast.error('Password must be at least 6 characters')
+      return
+    } else if (name.length < 3) {
+      toast.error('Name must be at least 3 characters')
+      return
     }
+
     try {
       const data = await signup({ email, password, name })
       dispatch({ type: 'USER_SIGNIN', payload: data })

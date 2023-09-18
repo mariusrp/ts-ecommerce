@@ -43,7 +43,7 @@ export default function NavigationBar() {
   return (
     <>
       <Navbar
-        className="d-flex flex-column align-items-stretch p-4 "
+        className="d-flex flex-column align-items-stretch p-3 "
         bg="dark"
         variant="dark"
         expand="lg"
@@ -57,7 +57,7 @@ export default function NavigationBar() {
             >
               <i className="fas fa-bars" style={{ fontSize: '32px' }}></i>
             </Link>
-            <LinkContainer to="/" className="px-2">
+            <LinkContainer to="/" className="px-1">
               <NavbarBrand className="d-flex align-items-center">
                 {screenWidth > 768 ? (
                   'AutomateHub'
