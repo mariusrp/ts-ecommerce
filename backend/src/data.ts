@@ -9,7 +9,7 @@ export const sampleProducts: Product[] = [
     images: [
       'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/cameras/arlo-pro-4.jpeg',
     ],
-    category: 'Security Cameras',
+    category: 'cameras',
     brand: 'Arlo',
     price: 110,
     countInStock: 100,
@@ -41,7 +41,7 @@ export const sampleProducts: Product[] = [
     images: [
       'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/security/ultraloq-pro-6.jpeg',
     ],
-    category: 'smart locks',
+    category: 'security',
     brand: 'Ultraloq',
     price: 309.99,
     countInStock: 49,
@@ -57,7 +57,7 @@ export const sampleProducts: Product[] = [
     images: [
       'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/speakers/amazon-echo-4th-gen.jpg',
     ],
-    category: 'smart speakers',
+    category: 'speakers',
     brand: 'Amazon',
     price: 79.99,
     countInStock: 320,
@@ -73,7 +73,7 @@ export const sampleProducts: Product[] = [
     images: [
       'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/displays/OS_3_WWW_Intro_2.webp',
     ],
-    category: 'tablets',
+    category: 'displays',
     brand: 'Control4',
     price: 19.99,
     countInStock: 210,
@@ -90,7 +90,7 @@ export const sampleProducts: Product[] = [
       'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/displays/google-nest-hub-2-generasjon-charcoal--pdp_zoom-3000--pdp_main-960.avif',
       'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/displays/google-nest-hub-2-generasjon-charcoal--pdp_zoom-3000.avif',
     ],
-    category: 'tablets',
+    category: 'displays',
     brand: 'Google',
     price: 119.99,
     countInStock: 320,
