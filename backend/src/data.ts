@@ -6,7 +6,9 @@ export const sampleProducts: Product[] = [
   {
     name: 'Arlo Pro 4',
     slug: 'Wire-Free-Security-Camera',
-    images: ['/images/products/arlo-pro-4-wire-free-security-camera.jpg'],
+    images: [
+      'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/cameras/arlo-pro-4.jpeg',
+    ],
     category: 'Security Cameras',
     brand: 'Arlo',
     price: 110,
@@ -20,8 +22,10 @@ export const sampleProducts: Product[] = [
   {
     name: 'Ezviz DB1C',
     slug: 'Wi-Fi-Video-Doorbell',
-    images: ['/images/products/ezviz-db1c-wi-fi-video-doorbell.jpg'],
-    category: 'doorbell cameras',
+    images: [
+      'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/cameras/Ezviz-db1c-video-doorbel.jpg',
+    ],
+    category: 'cameras',
     brand: 'Ezviz',
     price: 119.99,
     countInStock: 200,
@@ -34,7 +38,9 @@ export const sampleProducts: Product[] = [
   {
     name: 'Ultraloq U-Bolt',
     slug: 'Wi-Fi-Smart-Lock',
-    images: ['/images/products/ultraloq-u-bolt-pro-wi-fi-smart-lock.jpg'],
+    images: [
+      'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/security/ultraloq-pro-6.jpeg',
+    ],
     category: 'smart locks',
     brand: 'Ultraloq',
     price: 309.99,
@@ -48,7 +54,9 @@ export const sampleProducts: Product[] = [
   {
     name: 'Amazon Echo 4',
     slug: 'Amazon-Echo-4th-Gen',
-    images: ['/images/products/amazon-echo-4th-gen_q9mv.3840.jpg'],
+    images: [
+      'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/speakers/amazon-echo-4th-gen.jpg',
+    ],
     category: 'smart speakers',
     brand: 'Amazon',
     price: 79.99,
@@ -62,7 +70,9 @@ export const sampleProducts: Product[] = [
   {
     name: 'Control4 Tablet',
     slug: 'Control4-Tablet',
-    images: ['/images/products/OS_3_WWW_Intro_2.jpg'],
+    images: [
+      'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/displays/OS_3_WWW_Intro_2.webp',
+    ],
     category: 'tablets',
     brand: 'Control4',
     price: 19.99,
@@ -77,8 +87,8 @@ export const sampleProducts: Product[] = [
     name: 'Google Nest Hub 2',
     slug: 'Google-Nest-Hub-2',
     images: [
-      '/images/products/google-nest-hub-2-generasjon-charcoal01.jpg',
-      '/images/products/google-nest-hub-2-generasjon-charcoal02.jpg',
+      'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/displays/google-nest-hub-2-generasjon-charcoal--pdp_zoom-3000--pdp_main-960.avif',
+      'https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/displays/google-nest-hub-2-generasjon-charcoal--pdp_zoom-3000.avif',
     ],
     category: 'tablets',
     brand: 'Google',

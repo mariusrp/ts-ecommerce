@@ -4,8 +4,11 @@ import { UserModel } from '../models/userModel'
 import { OrderModel } from '../models/orderModel'
 import { ProductModel } from '../models/productModel'
 import path from 'path'
-import multer from 'multer'
+
 import { isAdmin, isAuth } from '../utils'
+const aws = require('aws-sdk')
+const multer = require('multer')
+const multerS3 = require('multer-s3')
 
 export const adminRouter = express.Router()
 
@@ -77,14 +80,35 @@ adminRouter.delete(
   })
 )
 
-const storage = multer.diskStorage({
-  destination: '../frontend/public/images/products',
-  filename: function (req, file, cb) {
+// const storage = multer.diskStorage({
+//   destination: '../frontend/public/images/products',
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
+//     const fileExtension = path.extname(file.originalname)
+//     cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension)
+//   },
+// })
+// const upload = multer({ storage: storage })
+
+aws.config.update({
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  region: 'us-west-2',
+})
+
+const s3 = new aws.S3()
+
+const storage = multerS3({
+  s3: s3,
+  bucket: 'ecommerce-image-bucket',
+  acl: 'public-read',
+  key: function (req: Request, file: Express.Multer.File, cb: any) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
     const fileExtension = path.extname(file.originalname)
-    cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension)
+    cb(null, 'products/' + file.fieldname + '-' + uniqueSuffix + fileExtension)
   },
 })
+
 const upload = multer({ storage: storage })
 
 adminRouter.post(
@@ -112,7 +136,8 @@ adminRouter.post(
     } = req.body
 
     const images = (req.files as Express.Multer.File[]).map(
-      (file: Express.Multer.File) => '/images/products/' + file.filename
+      (file: Express.Multer.File) =>
+        `https://ecommerce-image-bucket.s3.us-west-2.amazonaws.com/products/${file.filename}`
     )
 
     console.log(reviews)

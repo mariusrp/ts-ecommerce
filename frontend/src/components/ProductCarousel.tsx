@@ -6,21 +6,21 @@ export default function ProductCarousel() {
       <Carousel.Item>
         <img
           className="d-block w-100 carousel-img"
-          src="/images/products/OS_3_WWW_Intro_2.jpg"
+          src="https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/cameras/arlo-pro-4.jpeg"
           alt="First slide"
         />
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100 carousel-img"
-          src="/images/products/images-1693085782923-982304653.webp"
+          src="https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/security/ultraloq-pro-6.jpeg"
           alt="Second slide"
         />
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100 carousel-img"
-          src="/images/products/ultraloq-u-bolt-pro-wi-fi-smart-lock.jpg"
+          src="https://ecommerce-image-bucket.s3.eu-north-1.amazonaws.com/prodcucts/displays/OS_3_WWW_Intro_2.webp"
           alt="Third slide"
         />
       </Carousel.Item>
